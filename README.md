@@ -3,7 +3,7 @@
 Steps to run locally
 
 - `bundle install`
-- `rails db:create && rails db:seed`
+- `rails db:create && rails db:migrate && rails db:seed`
 - `rails s`
 
 ## Endpoints
