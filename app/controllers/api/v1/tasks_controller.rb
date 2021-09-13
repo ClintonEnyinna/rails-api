@@ -8,13 +8,13 @@ module Api
       end
 
       def show
-        @task = Task.find(params[:id])
+        @task = current_user.tasks.find(params[:id])
         
         render jsonapi: @task, status: :ok
       end
     
       def create
-        @task = Task.new(task_param)
+        @task = current_user.tasks.new(task_param)
     
         if @task.save
           render jsonapi: @task, status: :created
@@ -24,7 +24,7 @@ module Api
       end
     
       def update
-        @task = Task.find(params[:id])
+        @task = current_user.tasks.find(params[:id])
     
         if @task.update(task_param)
           render jsonapi: @task, status: :ok
@@ -34,7 +34,7 @@ module Api
       end
     
       def destroy
-        @task = Task.find(params[:id])
+        @task = current_user.tasks.find(params[:id])
         @task.destroy
 
         render jsonapi: @task
@@ -47,10 +47,10 @@ module Api
       end
 
       def tasks
-        return Task.completed.limit(default_limit) if params[:completed] == "true"
-        return Task.uncompleted.limit(default_limit) if params[:completed] == "false"
+        return current_user.tasks.completed.limit(default_limit) if params[:completed] == "true"
+        return current_user.tasks.uncompleted.limit(default_limit) if params[:completed] == "false"
 
-        Task.limit(default_limit)
+        current_user.tasks.limit(default_limit)
       end
     end
   end
