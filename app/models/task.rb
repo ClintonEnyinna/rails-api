@@ -3,4 +3,6 @@ class Task < ApplicationRecord
 
   scope :completed, -> { where(completed: true) }
   scope :uncompleted, -> { where(completed: false) }
+
+  belongs_to :user
 end
